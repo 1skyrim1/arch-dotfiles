@@ -20,3 +20,7 @@ source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 # Plugins (only if installed) - syntax highlighting must stay last
 [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# aliases
+alias ls="exa -la"
+alias ff="fastfetch"
