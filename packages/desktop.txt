@@ -15,6 +15,7 @@ xdg-desktop-portal-gtk
 hyprpolkitagent
 # Qt apps (incl. Quickshell) natively on Wayland
 qt6-wayland
+qt6-multimedia-ffmpeg
 
 quickshell
 
@@ -22,6 +23,7 @@ quickshell
 pipewire
 pipewire-pulse
 pipewire-alsa
+pipewire-jack
 wireplumber
 
 # Bluetooth: service + bluetoothctl
@@ -41,6 +43,13 @@ power-profiles-daemon
 wl-clipboard
 grim
 slurp
+zsh-completions
+zsh-autosuggestions
+zsh-syntax-highlighting
+
+# File Managers
+yazi
+dolphin
 
 # Fonts: base, emoji, programming font with icons
 noto-fonts

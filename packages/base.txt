@@ -1,0 +1,12 @@
+networkmanager
+sudo
+nano
+neovim
+openssh
+kitty
+git
+github-cli
+man-db
+man-pages
+base-devel
+zsh
