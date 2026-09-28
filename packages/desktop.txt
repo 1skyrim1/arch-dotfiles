@@ -46,6 +46,7 @@ slurp
 zsh-completions
 zsh-autosuggestions
 zsh-syntax-highlighting
+exa
 
 # File Managers
 yazi
