@@ -11,7 +11,7 @@ comm -23 <(list "$D"/packages/*.txt) <(pacman -Qq | sort)
 
 echo "== Changed in /etc, but not in system/"
 LC_ALL=C pacman -Qii | grep -o '/[^ ]* \[modified\]' | cut -d' ' -f1 | while read -r f; do
-  [ -e "$D/system$f" ] || echo "$f"
+  [ -e "$D/system$f" ] || echo "$f" | grep -v -x -E '/etc/(passwd|group|shadow|gshadow|subuid|subgid|shells|resolv\.conf|fstab|hostname|machine-id|adjtime)'
 done
 
 echo "== In system/, but different from /etc"
@@ -20,7 +20,11 @@ echo "== In system/, but different from /etc"
 done
 
 echo "== ~/.config folders not linked by stow"
-find ~/.config -mindepth 1 -maxdepth 1 ! -type l -printf '%f\n' | sort
+for d in ~/.config/*; do
+  [ -L "$d" ] && continue
+  [ -d "$d" ] && [ -n "$(find "$d" -type l -lname '*dotfiles/*' -print -quit)" ] && continue
+  basename "$d"
+done | sort | grep -v -x -E 'dconf|gh|systemd|pulse'
 
 echo "== Uncommitted changes"
 git -C "$D" status --short
