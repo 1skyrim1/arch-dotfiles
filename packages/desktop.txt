@@ -47,6 +47,7 @@ zsh-completions
 zsh-autosuggestions
 zsh-syntax-highlighting
 exa
+fastfetch
 
 # File Managers
 yazi
