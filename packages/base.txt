@@ -1,3 +1,10 @@
+base
+efibootmgr
+grub
+linux
+linux-firmware
+sbctl
+sof-firmware
 networkmanager
 sudo
 nano

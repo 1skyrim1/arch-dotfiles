@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Shows everything on this system that is not in ~/dotfiles (and the other way round)
+D=~/dotfiles
+list() { sed 's/#.*//' "$@" | tr -d '\r' | tr -s ' \t' '\n' | sed '/^$/d' | sort -u; }
+
+echo "== Installed, but not in packages/*.txt"
+comm -13 <(list "$D"/packages/*.txt) <(pacman -Qqe | sort)
+
+echo "== In packages/*.txt, but not installed"
+comm -23 <(list "$D"/packages/*.txt) <(pacman -Qq | sort)
+
+echo "== Changed in /etc, but not in system/"
+LC_ALL=C pacman -Qii | grep -o '/[^ ]* \[modified\]' | cut -d' ' -f1 | while read -r f; do
+  [ -e "$D/system$f" ] || echo "$f"
+done
+
+echo "== In system/, but different from /etc"
+(cd "$D/system" && find . -type f) | while read -r f; do
+  sudo cmp -s "$D/system/${f#./}" "/${f#./}" || echo "/${f#./}"
+done
+
+echo "== ~/.config folders not linked by stow"
+find ~/.config -mindepth 1 -maxdepth 1 ! -type l -printf '%f\n' | sort
+
+echo "== Uncommitted changes"
+git -C "$D" status --short
