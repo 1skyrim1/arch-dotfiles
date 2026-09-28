@@ -1,0 +1,52 @@
+# Desktop packages for the Hyprland/Quickshell setup
+# Install: grep -v '^#' ~/dotfiles/packages/desktop.txt | sudo pacman -S --needed -
+# Comments must be on their own lines; a comment after a package name breaks the install.
+
+# Compositor and session
+# Hyprland: window manager/compositor
+hyprland
+# Starts Hyprland as a systemd session (clean autostart/shutdown)
+uwsm
+# Screen sharing and screenshots for apps
+xdg-desktop-portal-hyprland
+# File open/save dialogs for apps using the portal
+xdg-desktop-portal-gtk
+# Password prompt when GUI apps need admin rights
+hyprpolkitagent
+# Qt apps (incl. Quickshell) natively on Wayland
+qt6-wayland
+
+quickshell
+
+# Audio: PipeWire + compatibility for PulseAudio/ALSA apps + device management
+pipewire
+pipewire-pulse
+pipewire-alsa
+wireplumber
+
+# Bluetooth: service + bluetoothctl
+bluez
+bluez-utils
+
+# Graphics (Intel): OpenGL, Vulkan, hardware video decoding
+mesa
+vulkan-intel
+intel-media-driver
+
+# Laptop: brightness keys, power profiles
+brightnessctl
+power-profiles-daemon
+
+# Tools: clipboard CLI, screenshots
+wl-clipboard
+grim
+slurp
+
+# Fonts: base, emoji, programming font with icons
+noto-fonts
+noto-fonts-emoji
+ttf-jetbrains-mono-nerd
+
+# System: compressed swap in RAM, dotfile linking
+zram-generator
+stow
