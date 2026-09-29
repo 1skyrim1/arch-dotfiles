@@ -48,6 +48,7 @@ zsh-autosuggestions
 zsh-syntax-highlighting
 exa
 fastfetch
+fzf
 
 # File Managers
 yazi
