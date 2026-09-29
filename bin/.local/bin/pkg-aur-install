@@ -9,8 +9,10 @@ pkgs=$(yay -Slqa | sort -u | fzf --multi \
   --bind 'alt-i:change-preview:yay -Siia {1}')
 [ -z "$pkgs" ] && exit 0
 
-yay -S --needed $pkgs || exit 1
+yay -S --needed $pkgs
+
+# Record every selected package that is really installed now (independent of the exit code)
 for p in $pkgs; do
-  grep -qxF "$p" "$list" || echo "$p" >> "$list"
+  pacman -Q "$p" &>/dev/null || { echo "Not installed: $p"; continue; }
+  grep -qxF "$p" "$list" 2>/dev/null || { echo "$p" >> "$list"; echo "Added to $(basename "$list"): $p"; }
 done
-echo "Added to $list -> add a comment above them and commit"

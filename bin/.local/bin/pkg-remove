@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Pick installed packages, remove them and delete them from packages/*.txt
+lists=(~/dotfiles/packages/*.txt)
+
+pkgs=$(pacman -Qqe | fzf --multi \
+  --preview 'pacman -Qi {1}' --preview-window 'down:65%:wrap' \
+  --preview-label 'tab: multi-select')
+[ -z "$pkgs" ] && exit 0
+
+sudo pacman -Rns $pkgs
+
+# Only delete from the lists what is really gone now
+for p in $pkgs; do
+  pacman -Q "$p" &>/dev/null && { echo "Still installed: $p"; continue; }
+  for f in "${lists[@]}"; do
+    grep -qxF "$p" "$f" && { sed -i "/^$(printf '%s' "$p" | sed 's/[.[\*^$/]/\\&/g')\$/d" "$f"; echo "Removed from $(basename "$f"): $p"; }
+  done
+done
+echo "Check the lists for comment lines that now describe nothing"
