@@ -46,9 +46,12 @@ slurp
 zsh-completions
 zsh-autosuggestions
 zsh-syntax-highlighting
-exa
+eza
 fastfetch
 fzf
+
+# Browser
+zen-browser-bin
 
 # File Managers
 yazi
@@ -62,3 +65,4 @@ ttf-jetbrains-mono-nerd
 # System: compressed swap in RAM, dotfile linking
 zram-generator
 stow
+hyprpaper

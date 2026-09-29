@@ -17,11 +17,14 @@ zstyle ':completion:*' menu select
 source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# Plugins (only if installed) - syntax highlighting must stay last
-[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# ENV Variables
+export PATH="${PATH}:${HOME}/.local/bin"
 
 # aliases
 alias ls="exa -la"
 alias ff="fastfetch"
 alias checkbat="cat /sys/class/power_supply/BAT0/capacity"
+
+# Plugins (only if installed) - syntax highlighting must stay last
+[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
