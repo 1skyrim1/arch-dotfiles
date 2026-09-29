@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Search the official repos, install the selection and add it to packages/desktop.txt
+list=~/dotfiles/packages/desktop.txt
+
+pkgs=$(pacman -Slq | sort -u | fzf --multi \
+  --preview 'pacman -Sii {1}' --preview-window 'down:65%:wrap' \
+  --preview-label 'tab: multi-select')
+[ -z "$pkgs" ] && exit 0
+
+sudo pacman -S --needed $pkgs || exit 1
+for p in $pkgs; do
+  grep -qxF "$p" "$list" || echo "$p" >> "$list"
+done
+echo "Added to $list -> add a comment above them and commit"
