@@ -244,12 +244,12 @@ hl.device({
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
--- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind("SUPER + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind("SUPER + W", hl.dsp.window.close())
-hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd(fileManager))
+hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("zen-browser"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind("SUPER + left",  hl.dsp.focus({ direction = "left" }))

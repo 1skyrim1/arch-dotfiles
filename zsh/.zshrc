@@ -24,3 +24,4 @@ source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 # aliases
 alias ls="exa -la"
 alias ff="fastfetch"
+alias checkbat="cat /sys/class/power_supply/BAT0/capacity"
