@@ -50,12 +50,9 @@ eza
 fastfetch
 fzf
 
-# Browser
-zen-browser-bin
-
 # File Managers
 yazi
-dolphin
+nautilus
 
 # Fonts: base, emoji, programming font with icons
 noto-fonts
