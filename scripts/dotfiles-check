@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shows everything on this system that is not in ~/dotfiles (and the other way round)
-D=~/dotfiles
+D=~/arch-dotfiles
 list() { sed 's/#.*//' "$@" | tr -d '\r' | tr -s ' \t' '\n' | sed '/^$/d' | sort -u; }
 
 echo "== Installed, but not in packages/*.txt"

@@ -7,7 +7,6 @@ sbctl
 sof-firmware
 networkmanager
 sudo
-nano
 neovim
 openssh
 kitty

@@ -7,6 +7,8 @@
 hyprland
 # Starts Hyprland as a systemd session (clean autostart/shutdown)
 uwsm
+# Notification Manager
+dunst
 # Screen sharing and screenshots for apps
 xdg-desktop-portal-hyprland
 # File open/save dialogs for apps using the portal
@@ -14,6 +16,7 @@ xdg-desktop-portal-gtk
 # Password prompt when GUI apps need admin rights
 hyprpolkitagent
 # Qt apps (incl. Quickshell) natively on Wayland
+qt5-wayland
 qt6-wayland
 qt6-multimedia-ffmpeg
 
