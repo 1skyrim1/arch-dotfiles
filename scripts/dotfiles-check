@@ -24,7 +24,7 @@ for d in ~/.config/*; do
   [ -L "$d" ] && continue
   [ -d "$d" ] && [ -n "$(find "$d" -type l -lname '*dotfiles/*' -print -quit)" ] && continue
   basename "$d"
-done | sort | grep -v -x -E 'dconf|gh|systemd|pulse'
+done | sort | grep -v -x -E 'dconf|gh|systemd|pulse|lazygit|user-dirs.dirs|user-dirs.locale|yay'
 
 echo "== Uncommitted changes"
 git -C "$D" status --short
