@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Pick installed packages, remove them and delete them from packages/*.txt
-lists=(~/dotfiles/packages/*.txt)
+lists=(~/arch-dotfiles/packages/*.txt)
 
 pkgs=$(pacman -Qqe | fzf --multi \
   --preview 'pacman -Qi {1}' --preview-window 'down:65%:wrap' \

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Search the AUR, install the selection and add it to packages/aur.txt
-list=~/dotfiles/packages/aur.txt
+list=~/arch-dotfiles/packages/aur.txt
 
 pkgs=$(yay -Slqa | sort -u | fzf --multi \
   --preview 'yay -Siia {1}' --preview-window 'down:65%:wrap' \
