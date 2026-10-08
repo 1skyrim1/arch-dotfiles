@@ -67,3 +67,4 @@ ttf-jetbrains-mono-nerd
 zram-generator
 stow
 hyprpaper
+cmake

@@ -2,3 +2,4 @@ yay-bin
 vscodium-bin
 zen-browser-bin
 
+fetch-git
