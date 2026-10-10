@@ -20,6 +20,12 @@ source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 # ENV Variables
 export PATH="${PATH}:${HOME}/.local/bin"
 
+
+# [Ctrl+RightArrow] - move forward one word
+bindkey '^[[1;5C' forward-word
+# [Ctrl-LeftArrow] - move backward one word
+bindkey '^[[1;5D' backward-word
+
 # aliases
 alias ls="exa -la"
 alias ff="fastfetch"
