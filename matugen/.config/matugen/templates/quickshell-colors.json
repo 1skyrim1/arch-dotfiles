@@ -1,0 +1,13 @@
+{
+    "m3surface": "{{colors.surface.default.hex}}",
+    "m3surfaceContainer": "{{colors.surface_container.default.hex}}",
+    "m3surfaceContainerHigh": "{{colors.surface_container_high.default.hex}}",
+    "m3onSurface": "{{colors.on_surface.default.hex}}",
+    "m3onSurfaceVariant": "{{colors.on_surface_variant.default.hex}}",
+    "m3outline": "{{colors.outline.default.hex}}",
+    "m3outlineVariant": "{{colors.outline_variant.default.hex}}",
+    "m3primary": "{{colors.primary.default.hex}}",
+    "m3onPrimary": "{{colors.on_primary.default.hex}}",
+    "m3tertiary": "{{colors.tertiary.default.hex}}",
+    "m3error": "{{colors.error.default.hex}}"
+}

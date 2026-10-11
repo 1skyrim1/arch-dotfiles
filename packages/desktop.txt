@@ -7,8 +7,6 @@
 hyprland
 # Starts Hyprland as a systemd session (clean autostart/shutdown)
 uwsm
-# Notification Manager
-dunst
 # Screen sharing and screenshots for apps
 xdg-desktop-portal-hyprland
 # File open/save dialogs for apps using the portal
@@ -66,5 +64,7 @@ ttf-jetbrains-mono-nerd
 # System: compressed swap in RAM, dotfile linking
 zram-generator
 stow
-hyprpaper
 cmake
+matugen
+pacman-contrib
+upower
