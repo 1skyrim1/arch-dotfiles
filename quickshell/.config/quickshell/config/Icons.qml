@@ -28,6 +28,9 @@ Singleton {
   readonly property string settings: "\u{f0493}"
   readonly property string lock: "\uf023"
 
+  readonly property string bellOff: "\uf1f6"
+  readonly property string close: "\uf00d"
+
   function network(kind: string, level: int): string {
     if (kind === "wired")
       return ethernet;

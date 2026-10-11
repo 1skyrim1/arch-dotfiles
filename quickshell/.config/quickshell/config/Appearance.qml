@@ -72,5 +72,12 @@ Singleton {
   readonly property int bigNumberSize: 32
   readonly property int levelBarHeight: 10
 
-  readonly property int notificationTimeout: 5000
+  //-- Notifications --
+  readonly property int notificationWidth: 360
+  readonly property int notificationCenterWidth: 380
+  readonly property int notificationListMaxHeight: 480
+  readonly property int notificationIconSize: 36
+  readonly property int notificationGap: 8
+  readonly property int notificationBodyLines: 3
+  readonly property int badgeSize:7
 }

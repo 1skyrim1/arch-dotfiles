@@ -41,7 +41,7 @@ PanelWindow {
       anchors.centerIn: parent
       spacing: Appearance.sectionSpacing
 
-      // Notifications {}
+      NotificationBell {}
       Workspaces { monitor: Hyprland.monitorFor(root.screen) }
       PowerMode {}
     }
