@@ -18,7 +18,14 @@ WlSessionLockSurface {
 
     anchors.fill: parent
 
-    Component.onCompleted: passwordField.focusInput()
+    opacity: 0
+    Component.onCompleted: {
+      opacity = 1;
+      passwordField.focusInput();
+    }
+    Behavior on opacity {
+      NumberAnimation { duration: Appearance.animationDuration }
+    }
 
     BlurredWallpaper {
       anchors.fill: parent
