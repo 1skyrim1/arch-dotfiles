@@ -10,7 +10,6 @@ Singleton {
 
   readonly property list<string> terminal: ["kitty"]
 
-  readonly property list<string> launcherCommand: ["walker"]
   readonly property list<string> networkSettingsCommand: inTerminal(["nmtui"])
   readonly property list<string> updateCommand: inTerminal(["sh", "-c", "sudo pacman -Syu; qs ipc call updates check"])
 
@@ -33,6 +32,14 @@ Singleton {
   readonly property real batteryCriticalThreshold: 0.1
 
   readonly property int notificationTimeout: 5000
+
+  //-- Session Menu --
+  readonly property list<string> launcherCommand: ["walker"]
+  readonly property list<string> shutdownCommand: ["systemctl", "poweroff"]
+  readonly property list<string> rebootCommand: ["systemctl", "reboot"]
+  readonly property list<string> suspendCommand: ["systemctl", "suspend"]
+  readonly property list<string> logoutCommand: ["sh", "-c", "loginctl terminate-session \"$XDG_SESSION_ID\""]
+  readonly property list<string> lockCommand: ["loginctl", "lock-session"]
 
   // Returns the terminal command followed by `args`, so the command opens in a new terminal window.
   function inTerminal(args: list<string>): list<string> {

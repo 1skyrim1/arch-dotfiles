@@ -9,9 +9,7 @@ Scope {
   PanelWindow {
     id: window
 
-    screen: Array.from(Quickshell.screens).find(
-      candidate => Hyprland.monitorFor(candidate) === Hyprland.focusedMonitor)
-      ?? Quickshell.screens[0]
+    screen: Hypr.focusedScreen
 
     anchors {
       top: true

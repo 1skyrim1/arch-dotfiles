@@ -32,9 +32,9 @@ PanelWindow {
       anchors.verticalCenter: parent.verticalCenter
       spacing: Appearance.sectionSpacing
 
-      // Logo {}
+      Logo {}
       Clock {}
-      // Media {}
+      MediaStatus {}
     }
 
     RowLayout {

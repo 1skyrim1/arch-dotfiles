@@ -22,6 +22,9 @@ Singleton {
 
   //-- Media --
   readonly property int mediaMaxTextWidth: 220
+  readonly property int mediaPopupWidth: 360
+  readonly property int mediaArtSize: 96
+  readonly property int mediaControlSpacing: 12
 
   //-- Typography --
   readonly property string fontFamily: "JetBrainsMono Nerd Font"
@@ -80,4 +83,11 @@ Singleton {
   readonly property int notificationGap: 8
   readonly property int notificationBodyLines: 3
   readonly property int badgeSize:7
+
+  //-- Session Menu --
+  readonly property int sessionTileWidth: 140
+  readonly property int sessionTileHeight: 150
+  readonly property int sessionTileRadius: 24
+  readonly property int sessionTileSpacing: 24
+  readonly property int sessionIconSize: 44
 }

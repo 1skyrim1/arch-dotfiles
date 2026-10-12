@@ -4,12 +4,13 @@ import Quickshell
 import qs.modules.background
 import qs.modules.bar
 import qs.modules.notifications
+import qs.modules.session
 
 ShellRoot {
   Background {}
   Bar {}
   NotificationPopups {}
+  SessionMenu {}
 //Launcher {}
-//NotificationCenter {}
 //ThemeSwitcher {}
 }

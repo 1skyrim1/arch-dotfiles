@@ -84,25 +84,10 @@ BarPopup {
   }
 
   // Shown instead of the list when there's notification
-  ColumnLayout {
-    Layout.fillWidth: true
-    Layout.topMargin: Appearance.cardPadding
-    Layout.bottomMargin: Appearance.cardPadding
+  EmptyState {
     visible: Notifications.count === 0
-    spacing: Appearance.popupRowPadding
-
-    StyledText {
-      Layout.alignment: Qt.AlignHCenter
-      text: Notifications.doNotDisturb ? Icons.bellOff : Icons.bell
-      color: Colors.foregroundMuted
-      font.pixelSize: Appearance.cardIconSize
-    }
-
-    StyledText {
-      Layout.alignment: Qt.AlignHCenter
-      text: "No notifications"
-      color: Colors.foregroundMuted
-    }
+    icon: Notifications.doNotDisturb ? Icons.bellOff : Icons.bell
+    text: "No notifications"
   }
 
   //-- Footer --

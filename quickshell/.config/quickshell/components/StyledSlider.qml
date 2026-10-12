@@ -7,7 +7,10 @@ Item {
 
   property real value: 0
 
+  readonly property alias pressed: mouseArea.pressed
+
   signal moved(real newValue)
+  signal released(real newValue)
 
   readonly property real clampedValue: Math.max(0, Math.min(1, value))
 
@@ -42,15 +45,18 @@ Item {
   }
 
   MouseArea {
+    id: mouseArea
+
+    function valueAt(mouseX: real): real {
+      return Math.max(0, Math.min(1, mouseX / width));
+    }
+
     anchors.fill: parent
     cursorShape: Qt.PointingHandCursor
     preventStealing: true
 
-    function report(mouseX: real): void {
-      root.moved(Math.max(0, Math.min(1, mouseX/width)));
-    }
-
-    onPressed: mouse => report(mouse.x)
-    onPositionChanged: mouse => report(mouse.x)
+    onPressed: mouse => root.moved(valueAt(mouse.x))
+    onPositionChanged: mouse => root.moved(valueAt(mouse.x))
+    onReleased: mouse => root.released(valueAt(mouse.x))
   }
 }
