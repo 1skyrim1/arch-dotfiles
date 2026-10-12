@@ -68,3 +68,5 @@ cmake
 matugen
 pacman-contrib
 upower
+greetd
+rsync

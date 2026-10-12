@@ -22,12 +22,16 @@ Singleton {
   }
 
   function run(action: string): void {
+    if (action === "lock") {
+      menuVisible = false;
+      Lock.lock();
+      return;
+    }
     const commands = {
       shutdown: Config.shutdownCommand,
       reboot: Config.rebootCommand,
       logout: Config.logoutCommand,
       suspend: Config.suspendCommand,
-      lock: Config.lockCommand,
     };
     const command = commands[action];
     if (!command) {

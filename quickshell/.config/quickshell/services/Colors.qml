@@ -44,7 +44,7 @@ Singleton {
   property bool regeneratePending: false
 
   function regenerate(): void {
-    if (Wallpaper.current === "")
+    if (Config.greeterMode || Wallpaper.current === "")
       return;
     if (generator.running) {
       regeneratePending = true;
@@ -85,7 +85,7 @@ Singleton {
   // 1. Load: read colors.json into `scheme`
 
   FileView {
-    path: Quickshell.statePath("colors.json")
+    path: Config.greeterMode ? `${Config.sharedDir}/colors.json` : Quickshell.statePath("colors.json")
     watchChanges: true
     onFileChanged: reload()
     printErrors: false

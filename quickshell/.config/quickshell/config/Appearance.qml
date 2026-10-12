@@ -90,4 +90,14 @@ Singleton {
   readonly property int sessionTileRadius: 24
   readonly property int sessionTileSpacing: 24
   readonly property int sessionIconSize: 44
+
+  //-- Lock screen --
+  readonly property int lockClockSize: 96
+  readonly property int lockDateSize: 22
+  readonly property int lockAvatarSize: 64
+  readonly property int lockFieldWidth: 260
+
+  //-- Login Screen --
+  readonly property int greeterEdgeMargin: 32
+  readonly property int greeterListAvatarSize: 32
 }

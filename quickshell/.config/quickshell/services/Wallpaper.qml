@@ -15,6 +15,14 @@ Singleton {
 
   readonly property FolderListModel available: folderModel
 
+  readonly property string publishScript:
+    '[ -w "$2" ] || exit 0; cp -f -- "$1" "$2/wallpaper-image" && printf "%s" "$2/wallpaper-image" > "$2/wallpaper"'
+
+  onCurrentChanged: {
+    if (!Config.greeterMode && current !== "")
+      Quickshell.execDetached(["sh", "-c", publishScript, "sh", current, Config.sharedDir]);
+  }
+
   FolderListModel {
     id: folderModel
 
@@ -31,7 +39,8 @@ Singleton {
   FileView {
     id: storage
 
-    path: Quickshell.statePath("wallpaper")
+    //path: Quickshell.statePath("wallpaper")
+    path: Config.greeterMode ? `${Config.sharedDir}/wallpaper` : Quickshell.statePath("wallpaper")
     watchChanges: true
     onFileChanged: reload()
     printErrors: false

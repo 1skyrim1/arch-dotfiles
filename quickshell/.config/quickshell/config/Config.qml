@@ -41,6 +41,18 @@ Singleton {
   readonly property list<string> logoutCommand: ["sh", "-c", "loginctl terminate-session \"$XDG_SESSION_ID\""]
   readonly property list<string> lockCommand: ["loginctl", "lock-session"]
 
+  //-- Lock screen --
+  readonly property int lockAfterIdle: 5 * 60
+  readonly property string lockClockFormat: "HH:mm"
+  readonly property string lockDateFormat: "dddd, MMMM d"
+
+  //-- Login screen (greeter) --
+  readonly property bool greeterMode: Quickshell.env("MYSHELL_GREETER") === "1"
+  readonly property string sharedDir: "/var/lib/myshell"
+  readonly property string avatarDir: "/var/lib/AccountsService/icons"
+  readonly property int greeterMinUid: 1000
+  readonly property list<string> greeterSessionCommand: ["start-hyprland"]
+
   // Returns the terminal command followed by `args`, so the command opens in a new terminal window.
   function inTerminal(args: list<string>): list<string> {
     return Array.from(root.terminal).concat(Array.from(args));
