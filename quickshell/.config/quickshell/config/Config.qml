@@ -51,7 +51,7 @@ Singleton {
   readonly property string sharedDir: "/var/lib/myshell"
   readonly property string avatarDir: "/var/lib/AccountsService/icons"
   readonly property int greeterMinUid: 1000
-  readonly property list<string> greeterSessionCommand: ["start-hyprland"]
+  readonly property list<string> greeterSessionCommand: ["systemd-cat", "-t", "hyprland", "start-hyprland"]
 
   // Returns the terminal command followed by `args`, so the command opens in a new terminal window.
   function inTerminal(args: list<string>): list<string> {

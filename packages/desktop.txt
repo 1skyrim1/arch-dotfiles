@@ -70,3 +70,5 @@ pacman-contrib
 upower
 greetd
 rsync
+btop
+imagemagick
