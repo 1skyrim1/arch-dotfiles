@@ -35,6 +35,7 @@ Overlay {
 
   // Every opening starts at the wallpaper on screen now.
   onOpened: {
+    Wallpaper.rescan();
     strip.currentIndex = Math.max(0, Wallpaper.available.findIndex(entry => entry.path === Wallpaper.current));
     strip.forceActiveFocus();
     Wallpaper.upcoming = "";
@@ -47,7 +48,7 @@ Overlay {
   Timer {
     id: upcomingDelay
 
-    interval: 150
+    interval: 50
     onTriggered: Wallpaper.upcoming = Wallpaper.available[strip.currentIndex]?.path ?? ""
   }
 
