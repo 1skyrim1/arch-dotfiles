@@ -34,7 +34,6 @@ Singleton {
   readonly property int notificationTimeout: 5000
 
   //-- Session Menu --
-  readonly property list<string> launcherCommand: ["walker"]
   readonly property list<string> shutdownCommand: ["systemctl", "poweroff"]
   readonly property list<string> rebootCommand: ["systemctl", "reboot"]
   readonly property list<string> suspendCommand: ["systemctl", "suspend"]
@@ -42,7 +41,7 @@ Singleton {
   readonly property list<string> lockCommand: ["loginctl", "lock-session"]
 
   //-- Lock screen --
-  readonly property int lockAfterIdle: 5 * 60
+  readonly property int lockAfterIdle: -1
   readonly property string lockClockFormat: "HH:mm"
   readonly property string lockDateFormat: "dddd, MMMM d"
 

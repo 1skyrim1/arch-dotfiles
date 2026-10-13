@@ -12,6 +12,8 @@ Singleton {
   readonly property string volume: "\uf025"           // headphones
   readonly property string volumeMuted: "\uf026"
 
+  readonly property string search: "\uf002"           // magnifying glass
+
   readonly property string powerSaver: "\uf06c"       // leaf
   readonly property string powerBalanced: "\uf24e"    // balance scale
   readonly property string powerPerformance: "\uf0e7" // bolt
@@ -30,6 +32,9 @@ Singleton {
 
   readonly property string bellOff: "\uf1f6"
   readonly property string close: "\uf00d"
+
+  readonly property string calculator: "\uf1ec"
+  readonly property string emoji: "\uf118"
 
   //-- Media --
   readonly property string music: "\uf001"

@@ -1,116 +1,79 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
-import Quickshell.Wayland
 import qs.config
 import qs.services
 import qs.components
 
-Scope {
-  LazyLoader {
-    active: Session.menuVisible
+Overlay {
+  id: root
 
-    PanelWindow {
-      id: window
+  readonly property var actions: [
+    { id: "shutdown", label: "Shutdown", icon: Icons.shutdown },
+    { id: "reboot", label: "Reboot", icon: Icons.reboot },
+    { id: "logout", label: "Log out", icon: Icons.logout },
+    { id: "suspend", label: "Sleep", icon: Icons.sleep },
+    { id: "lock", label: "Lock", icon: Icons.lock },
+  ]
 
-      readonly property var actions: [
-        { id: "shutdown", label: "Shutdown", icon: Icons.shutdown },
-        { id: "reboot", label: "Reboot", icon: Icons.reboot },
-        { id: "logout", label: "Log out", icon: Icons.logout },
-        { id: "suspend", label: "Sleep", icon: Icons.sleep },
-        { id: "lock", label: "Lock", icon: Icons.lock },
-      ]
+  property int currentIndex: actions.length - 1
 
-      property int currentIndex: actions.length - 1
+  function move(step: int): void {
+    currentIndex = (currentIndex + step + actions.length) % actions.length;
+  }
 
-      function move(step: int): void {
-        currentIndex = (currentIndex + step + actions.length) % actions.length;
+  function runCurrent(): void {
+    Session.run(actions[currentIndex].id);
+  }
+
+  name: "session"
+  blurBackground: true
+
+  onOpened: currentIndex = actions.length - 1
+
+  Row {
+    anchors.centerIn: parent
+    spacing: Appearance.sessionTileSpacing
+
+    focus: true
+
+    Keys.onPressed: event => {
+      switch (event.key) {
+      case Qt.Key_Left:
+      case Qt.Key_H:
+      case Qt.Key_Backtab:
+        window.move(-1);
+        break;
+      case Qt.Key_Right:
+      case Qt.Key_L:
+      case Qt.Key_Tab:
+        window.move(1);
+        break;
+      case Qt.Key_Return:
+      case Qt.Key_Enter:
+      case Qt.Key_Space:
+        window.runCurrent();
+        break;
+      case Qt.Key_Escape:
+        Session.closeMenu();
+        break;
+      default:
+        return;
       }
+      event.accepted = true;
+    }
 
-      function runCurrent(): void {
-        Session.run(actions[currentIndex].id);
-      }
+    Repeater {
+      model: root.actions
 
-      screen: Hypr.focusedScreen
+      delegate: SessionTile {
+        required property var modelData
+        required property int index
 
-      anchors {
-        top: true
-        bottom: true
-        left: true
-        right: true
-      }
-      exclusionMode: ExclusionMode.Ignore
-      WlrLayershell.layer: WlrLayer.Overlay
-      WlrLayershell.namespace: "myshell-session"
-      WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
-      color: "transparent"
-
-      Item {
-        id: content
-
-        anchors.fill: parent
-        focus: true
-
-        opacity: 0
-        Component.onCompleted: opacity = 1
-        Behavior on opacity {
-          NumberAnimation { duration: Appearance.animationDuration }
-        }
-
-        Keys.onPressed: event => {
-          switch (event.key) {
-          case Qt.Key_Left:
-          case Qt.Key_H:
-          case Qt.Key_Backtab:
-            window.move(-1);
-            break;
-          case Qt.Key_Right:
-          case Qt.Key_L:
-          case Qt.Key_Tab:
-            window.move(1);
-            break;
-          case Qt.Key_Return:
-          case Qt.Key_Enter:
-          case Qt.Key_Space:
-            window.runCurrent();
-            break;
-          case Qt.Key_Escape:
-            Session.closeMenu();
-            break;
-          default:
-            return;
-          }
-          event.accepted = true;
-        }
-
-        BlurredWallpaper {
-          anchors.fill: parent
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          onClicked: Session.closeMenu()
-        }
-
-        Row {
-          anchors.centerIn: parent
-          spacing: Appearance.sessionTileSpacing
-
-          Repeater {
-            model: window.actions
-
-            delegate: SessionTile {
-              required property var modelData
-              required property int index
-
-              icon: modelData.icon
-              label: modelData.label
-              selected: index === window.currentIndex
-              onHovered: window.currentIndex = index
-              onClicked: Session.run(modelData.id)
-            }
-          }
-        }
+        icon: modelData.icon
+        label: modelData.label
+        selected: index === root.currentIndex
+        onHovered: root.currentIndex = index
+        onClicked: Session.run(modelData.id)
       }
     }
   }

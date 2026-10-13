@@ -72,3 +72,5 @@ greetd
 rsync
 btop
 imagemagick
+libqalculate
+unicode-emoji

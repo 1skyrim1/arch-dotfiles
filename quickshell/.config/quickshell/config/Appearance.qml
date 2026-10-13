@@ -100,4 +100,23 @@ Singleton {
   //-- Login Screen --
   readonly property int greeterEdgeMargin: 32
   readonly property int greeterListAvatarSize: 32
+
+  //-- Motion --
+  readonly property int animationDurationLong: 350
+  readonly property list<real> curveEnter: [0.05, 0.7, 0.1, 1, 1, 1]
+
+  //-- Overlays --
+  readonly property int overlayRadius: 20
+  readonly property int overlayPadding: 12
+  readonly property real overlayDim: 0.45
+  readonly property real overlayStartScale: 0.95
+
+  //-- Search lists (launcher) --
+  readonly property int searchRowHeight: 52
+  readonly property int searchVisibleRows: 7
+
+  //-- Launcher --
+  readonly property int launcherWidth: 560
+  readonly property int launcherIconSize: 32
+  readonly property real launcherTopFraction: 0.2
 }

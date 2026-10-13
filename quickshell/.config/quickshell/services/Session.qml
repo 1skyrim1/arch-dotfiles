@@ -7,23 +7,24 @@ import qs.config
 Singleton {
   id: root
 
-  property bool menuVisible: false
+  readonly property bool menuVisible: Overlays.current === "session"
 
   function openMenu(): void {
-    menuVisible = true;
+    Overlays.open("session");
   }
 
   function closeMenu(): void {
-    menuVisible = false;
+    if (menuVisible)
+      Overlays.close();
   }
 
   function toggleMenu(): void {
-    menuVisible = !menuVisible;
+    Overlays.toggle("session");
   }
 
   function run(action: string): void {
     if (action === "lock") {
-      menuVisible = false;
+      closeMenu();
       Lock.lock();
       return;
     }
@@ -38,7 +39,7 @@ Singleton {
       console.warn(`Session: unknown action "${action}"`);
       return;
     }
-    menuVisible = false;
+    closeMenu();
     Quickshell.execDetached(command);
   }
 

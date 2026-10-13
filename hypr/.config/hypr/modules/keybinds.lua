@@ -73,6 +73,9 @@ hl.bind("SUPER + N", ipc("notifications toggleDoNotDisturb"),
 hl.bind("SUPER + SHIFT + N", ipc("notifications dismissAll"),
   { description = "Dismiss all notifications" })
 
+hl.bind("SUPER + Space", ipc("launcher toggle"),
+  { description = "App launcher" })
+
 
 -- Volume
 hl.bind("XF86AudioRaiseVolume", ipc("audio increase"), held)

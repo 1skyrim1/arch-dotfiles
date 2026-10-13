@@ -46,6 +46,7 @@ Rectangle {
   StyledText {
     anchors.fill: input
     visible: input.text === ""
+    verticalAlignment: Text.AlignVCenter
     text: root.placeholderText
     color: Colors.foregroundMuted
   }

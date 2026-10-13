@@ -45,4 +45,13 @@ PopupWindow {
       spacing: Appearance.popupSpacing
     }
   }
+
+  Connections {
+    target: Overlays
+
+    function onCurrentChanged(): void {
+      if (Overlays.current !== "")
+        root.visible = false;
+    }
+  }
 }
