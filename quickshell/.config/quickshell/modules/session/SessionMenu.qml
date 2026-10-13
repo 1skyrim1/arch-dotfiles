@@ -41,17 +41,17 @@ Overlay {
       case Qt.Key_Left:
       case Qt.Key_H:
       case Qt.Key_Backtab:
-        window.move(-1);
+        root.move(-1);
         break;
       case Qt.Key_Right:
       case Qt.Key_L:
       case Qt.Key_Tab:
-        window.move(1);
+        root.move(1);
         break;
       case Qt.Key_Return:
       case Qt.Key_Enter:
       case Qt.Key_Space:
-        window.runCurrent();
+        root.runCurrent();
         break;
       case Qt.Key_Escape:
         Session.closeMenu();
