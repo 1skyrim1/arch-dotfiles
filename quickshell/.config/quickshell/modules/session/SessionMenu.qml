@@ -26,7 +26,7 @@ Overlay {
   }
 
   name: "session"
-  blurBackground: true
+  backdrop: "blur"
 
   onOpened: currentIndex = actions.length - 1
 

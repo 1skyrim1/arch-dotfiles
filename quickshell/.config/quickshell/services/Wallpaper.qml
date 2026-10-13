@@ -1,55 +1,94 @@
 pragma Singleton
 
-// Owns "which wallpaper is set"
+// Which wallpaper is on screen, and which ones you can choose from.
+//
+// Changing it goes through Theme.apply(), which switches the wallpaper and
+// the colors made from it together, by calling show() here.
 
 import QtQuick
+import Qt.labs.folderlistmodel
 import Quickshell
 import Quickshell.Io
-import Qt.labs.folderlistmodel
 import qs.config
 
 Singleton {
   id: root
 
-  readonly property string current: storage.text().trim()
+  //-- Public state --
 
-  readonly property FolderListModel available: folderModel
+  readonly property string current: Config.greeterMode ? sharedCopy : state.path
 
-  readonly property string publishScript:
-    '[ -w "$2" ] || exit 0; cp -f -- "$1" "$2/wallpaper-image" && printf "%s" "$2/wallpaper-image" > "$2/wallpaper"'
+  property var available: []
 
-  onCurrentChanged: {
-    if (!Config.greeterMode && current !== "")
-      Quickshell.execDetached(["sh", "-c", publishScript, "sh", current, Config.sharedDir]);
+  property bool scanned: false
+
+  // The wallpaper chosen in the switcher right now, or "". The
+  // background loads it at full size ahead of time, so the sweep can
+  // start the moment you press Enter.
+  property string upcoming: ""
+
+  readonly property string sharedCopy: `${Config.sharedDir}/wallpaper`
+
+  //-- Functions --
+
+  function show(path: string): void {
+    if (path === state.path)
+      return;
+    state.path = path;
+    Quickshell.execDetached(["cp", "--", path, sharedCopy]);
   }
 
+  function updateAvailable(): void {
+    if (folder.status !== FolderListModel.Ready)
+      return;
+    const wallpapers = [];
+    for (let i = 0; i < folder.count; i++) {
+      wallpapers.push({
+        path: folder.get(i, "filePath"),
+        modified: folder.get(i, "fileModified").getTime(),
+      });
+    }
+    scanned: true;
+    available = wallpapers;
+  }
+
+  //-- Internals --
+
   FolderListModel {
-    id: folderModel
+    id: folder
 
     folder: `file://${Config.wallpaperDir}`
     nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp"]
+    caseSensitive: false
     showDirs: false
     sortField: FolderListModel.Name
-  }
 
-  function set(path: string): void {
-    storage.setText(path);
+    onCountChanged: root.updateAvailable()
+    onStatusChanged: root.updateAvailable()
   }
 
   FileView {
-    id: storage
-
-    //path: Quickshell.statePath("wallpaper")
-    path: Config.greeterMode ? `${Config.sharedDir}/wallpaper` : Quickshell.statePath("wallpaper")
-    watchChanges: true
-    onFileChanged: reload()
+    path: Quickshell.statePath("wallpaper.json")
     printErrors: false
+    blockLoading: true
+    onAdapterUpdated: writeAdapter()
+
+    JsonAdapter {
+      id: state
+
+      property string path: ""
+    }
   }
 
   IpcHandler {
     target: "wallpaper"
+
+    function toggle(): void {
+      Overlays.toggle("wallpaper");
+    }
+
     function set(path: string): void {
-      root.set(path);
+      Theme.apply(path);
     }
 
     function get(): string {

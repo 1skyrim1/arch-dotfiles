@@ -1,10 +1,4 @@
 [config]
-source_color_index = 0
 
-[templates.quickshell]
-input_path = '~/.config/matugen/templates/quickshell-colors.json'
-output_path = '~/.local/state/myshell/colors.json'
+[templates]
 
-[templates.greeter]
-input_path = './templates/quickshell-colors.json'
-output_path = '/var/lib/myshell/colors.json'

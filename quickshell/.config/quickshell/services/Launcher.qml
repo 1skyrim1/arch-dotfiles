@@ -42,7 +42,7 @@ Singleton {
     case "emoji":
       return "No matching emoji";
     default:
-      return "No matcing apps";
+      return "No matching apps";
     }
   }
   readonly property string emptyIcon: mode === "calculator" ? Icons.calculator

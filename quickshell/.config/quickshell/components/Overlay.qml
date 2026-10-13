@@ -11,7 +11,10 @@ PanelWindow {
 
   required property string name
 
-  property bool blurBackground: false
+  // "dim": a dark layer you still see your windows through (launcher)
+  // "blur": the blurred wallpaper, hiding your windows (session menu)
+  // "none": nothing: windows stay fully visible (wallpaper switcher)
+  property string backdrop: "dim"
   default property alias content: contentArea.data
 
   readonly property bool open: Overlays.current === name
@@ -82,13 +85,13 @@ PanelWindow {
 
     Loader {
       anchors.fill: parent
-      active: root.blurBackground
+      active: root.backdrop === "blur"
       sourceComponent: BlurredWallpaper {}
     }
 
     Rectangle {
       anchors.fill: parent
-      visible: !root.blurBackground
+      visible: root.backdrop === "dim"
       color: Colors.background
       opacity: Appearance.overlayDim
     }

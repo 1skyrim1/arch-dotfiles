@@ -119,4 +119,17 @@ Singleton {
   readonly property int launcherWidth: 560
   readonly property int launcherIconSize: 32
   readonly property real launcherTopFraction: 0.2
+
+  //-- Chips and toggles --
+  readonly property int chipHeight: 30
+  readonly property int chipPadding: 14
+
+  //-- Wallpaper switcher --
+  readonly property int thumbnailWidth: 320
+  readonly property int thumbnailHeight: 180
+  readonly property int thumbnailSpacing: 12
+  readonly property int thumbnailRadius: 12
+  readonly property real thumbnailUnchosenScale: 0.85
+  //-- Theme --
+  readonly property int themeTransitionDuration: 1000
 }

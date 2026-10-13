@@ -13,97 +13,95 @@ import qs.config
 Singleton {
   id: root
 
-  // 3. Semantic Rols: the only colors other files may use.
+  //-- Roles --
 
-  readonly property color background: scheme.m3surface
+  // Desktop-level surface
+  readonly property color background: blend("surface")
+  readonly property color pillBackground: blend("surface_container")
+  readonly property color popupBackground: blend("surface_container")
+  // Things that sit on a popup: fields, buttons, the selected list row.
+  readonly property color surfaceRaised: blend("surface_container_highestt")
 
-  readonly property color pillBackground: Qt.rgba(scheme.m3surfaceContainer.r,
-                                                  scheme.m3surfaceContainer.g,
-                                                  scheme.m3surfaceContainer.b, 0.9)
-  readonly property color pillBackgroundHover: scheme.m3surfaceContainerHigh
+  // Text and icons.
+  readonly property color foreground: blend("on_surface")
+  readonly property color foregroundMuted: blend("on_surface_variant")
 
-  readonly property color foreground: scheme.m3onSurface
-  readonly property color foregroundMuted: scheme.m3onSurfaceVariant
+  // The wallpaper's main color, and text/icons placed on top of it.
+  readonly property color accent: blend("primary")
+  readonly property color foregroundOnAccent: blend("on_primary")
+  // A second, contrasting color (e.g. the upload line next to download).
+  readonly property color accentSecondary: blend("tertiary")
 
-  readonly property color accent: scheme.m3primary
-  readonly property color foregroundOnAccent: scheme.m3onPrimary
+  readonly property color warning: blend("tertiary")
+  readonly property color critical: blend("error")
 
-  readonly property color warning: scheme.m3tertiary
-  readonly property color critical: scheme.m3error
+  // Details
+  readonly property color sliderTrack: blend("outline_variant")
+  readonly property color workspaceEmpty: blend("outline_variant")
+  readonly property color workspaceOccupied: blend("on_surface_variant")
 
-  readonly property color workspaceEmpty: scheme.m3outlineVariant
-  readonly property color workspaceOccupied: scheme.m3outline
+  //-- The Palette --
+  property var palette: fallback
+  property var previousPalette: fallback
+  property real progress: 1
 
-  readonly property color popupBackground: scheme.m3surfaceContainer
-  readonly property color sliderTrack: scheme.m3surfaceContainerHigh
+  property bool loaded: false
 
-  readonly property color surfaceRaised: scheme.m3surfaceContainerHigh
-  readonly property color accentSecondary: scheme.m3tertiary
+  readonly property string paletteFile: Config.greeterMode
+    ? `${Config.sharedDir}/palette.json`
+    : Quickshell.statePath("palette.json")
 
-  // 2. Generate: run matugen when the wallpaper changes
-  property bool regeneratePending: false
-
-  function regenerate(): void {
-    if (Config.greeterMode || Wallpaper.current === "")
-      return;
-    if (generator.running) {
-      regeneratePending = true;
-      return;
-    }
-    generator.running = true;
+  function show(newPalette: var): void {
+    fade.stop();
+    progress = 0;
+    previousPalette = palette;
+    palette = newPalette;
+    fade.start();
   }
 
-  Connections {
-    target: Wallpaper
-
-    function onCurrentChanged() {
-      root.regenerate();
-    }
+  function blend(name: string): color {
+    const from = previousPalette[name] ?? fallback[name];
+    const to = palette[name] ?? fallback[name];
+    return Qt.tint(from, Qt.alpha(to, progress))
   }
 
-  Process {
-    id: generator
+  NumberAnimation {
+    id: fade
 
-    command: ["matugen", "image", Wallpaper.current,
-              "--mode", Config.colorMode]
-
-    stderr: StdioCollector {
-      onStreamFinished: {
-        if (text !== "")
-          console.warn("matugen:", text);
-      }
-    }
-
-    onExited: {
-      if (root.regeneratePending) {
-        root.regeneratePending = false;
-        root.regenerate();
-      }
-    }
+    target: root
+    property: "progress"
+    to: 1
+    duration: Appearance.themeTransitionDuration
+    easing.type: Easing.InOutCubic
   }
 
-  // 1. Load: read colors.json into `scheme`
+  readonly property var fallback: ({
+    surface: "#141218",
+    surface_container: "#211f24",
+    surface_container_highest: "#36343a",
+    on_surface: "#e6e0e9",
+    on_surface_variant: "#cac4cf",
+    primary: "#cfbdfe",
+    on_primary: "#36275d",
+    tertiary: "#efb8c8",
+    error: "#ffb4ab",
+    outline_variant: "#49454e",
+  })
 
   FileView {
-    path: Config.greeterMode ? `${Config.sharedDir}/colors.json` : Quickshell.statePath("colors.json")
-    watchChanges: true
-    onFileChanged: reload()
+    path: root.paletteFile
+    blockLoading: true
     printErrors: false
 
-    adapter: JsonAdapter {
-      id: scheme
-
-      property color m3surface: "#303446"
-      property color m3surfaceContainer: "#232634"
-      property color m3surfaceContainerHigh: "#414559"
-      property color m3onSurface: "#c6d0f5"
-      property color m3onSurfaceVariant: "#a5adce"
-      property color m3outline: "#737994"
-      property color m3outlineVariant: "#51576d"
-      property color m3primary: "#8caaee"
-      property color m3onPrimary: "#232634"
-      property color m3tertiary: "#ef9f76"
-      property color m3error: "#e78284"
+    onLoaded: {
+      try {
+        const colors = JSON.parse(text()).colors;
+        root.palette = colors;
+        root.previousPalette = colors;
+        root.loaded = true;
+      } catch (error) {
+        console.warn(`Colors: ${root.paletteFile} is broken (${error}), using the fallback`);
+      }
     }
   }
 }

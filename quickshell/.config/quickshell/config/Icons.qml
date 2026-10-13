@@ -36,6 +36,8 @@ Singleton {
   readonly property string calculator: "\uf1ec"
   readonly property string emoji: "\uf118"
 
+  readonly property string image: "\uf03e"
+
   //-- Media --
   readonly property string music: "\uf001"
   readonly property string previous: "\uf048"

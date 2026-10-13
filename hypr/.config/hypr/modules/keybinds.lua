@@ -17,6 +17,7 @@ hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + J", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("zen-browser"))
+hl.bind("SUPER + F", hl.dsp.window.fullscreen("maximized", "toggle"))
 
 -- Move focus with SUPER + arrow keys
 hl.bind("SUPER + left", hl.dsp.focus({ direction = "left" }))
@@ -76,6 +77,8 @@ hl.bind("SUPER + SHIFT + N", ipc("notifications dismissAll"),
 hl.bind("SUPER + Space", ipc("launcher toggle"),
   { description = "App launcher" })
 
+hl.bind("SUPER + CTRL + Space", ipc("wallpaper toggle"),
+  { description = "Wallpaper & theme" })
 
 -- Volume
 hl.bind("XF86AudioRaiseVolume", ipc("audio increase"), held)

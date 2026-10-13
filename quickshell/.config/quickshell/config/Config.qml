@@ -13,8 +13,8 @@ Singleton {
   readonly property list<string> networkSettingsCommand: inTerminal(["nmtui"])
   readonly property list<string> updateCommand: inTerminal(["sh", "-c", "sudo pacman -Syu; qs ipc call updates check"])
 
-  // Material You schemes in a dark and a light variant; this one is passed to matugen
-  readonly property string colorMode: "dark"
+  readonly property string wallpaperMode: "dark"
+  readonly property string wallpaperScheme: "scheme-tonal-spot"
 
   readonly property string clockFormat: "h:mm AP"
   readonly property int workspaceCount: 5
