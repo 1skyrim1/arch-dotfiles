@@ -3,3 +3,5 @@ vscodium-bin
 zen-browser-bin
 
 fetch-git
+bibata-cursor-theme-bin
+localsend-bin

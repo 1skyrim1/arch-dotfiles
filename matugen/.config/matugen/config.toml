@@ -16,3 +16,13 @@ output_path = "~/.config/hypr/colors.lua"
 input_path = "~/.config/matugen/templates/kitty.conf"
 output_path = "~/.config/kitty/colors.conf"
 post_hook = "pkill -USR1 -x kitty || true"
+
+[templates.gtk]
+input_path = "~/.config/matugen/templates/gtk.css"
+output_path = "~/.config/gtk-4.0/gtk.css"
+post_hook = "gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3 && gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-dark"
+
+[templates.qt6ct]
+input_path = "~/.config/matugen/templates/qt6ct-colors.conf"
+output_path = "~/.config/qt6ct/colors/matugen.conf"
+post_hook = "touch ~/.config/qt6ct/.reload && rm ~/.config/qt6ct/.reload"
