@@ -41,6 +41,9 @@ Singleton {
   readonly property string chevronLeft: "\u{f0141}"
   readonly property string chevronRight: "\u{f0142}"
 
+  readonly property string stayAwakeOn: "\u{f0176}"    // coffee
+  readonly property string stayAwakeOff: "\u{f06ca}"   // coffee_outline
+
   //-- Media --
   readonly property string music: "\uf001"
   readonly property string previous: "\uf048"

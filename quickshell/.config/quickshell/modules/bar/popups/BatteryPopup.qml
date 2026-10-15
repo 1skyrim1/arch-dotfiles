@@ -2,9 +2,11 @@
 //  1. Big percentage with what's happening ("On Battery · 3 h 20 min left")
 //  2. Level bar
 //  3. Detail: power draw, energy, battery health
+//  4. Power mode: Saver · Balanced · Performance
 
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Services.UPower
 import qs.config
 import qs.services
 import qs.components
@@ -18,6 +20,18 @@ BarPopup {
     const minutes = Math.round(seconds / 60);
     const hours = Math.floor(minutes / 60);
     return hours > 0 ? `${hours} h ${minutes % 60} min` : `${minutes} min`;
+  }
+
+  // PowerProfile value → the name on the switch.
+  function profileLabel(profile: int): string {
+    switch (profile) {
+    case PowerProfile.PowerSaver:
+      return "Eco";
+    case PowerProfile.Performance:
+      return "Performance";
+    default:
+      return "Balanced";
+    }
   }
 
   readonly property string status: {
@@ -100,5 +114,25 @@ BarPopup {
         value: Power.health >= 0 ? `${Math.round(Power.health * 100)}%` : ""
       }
     }
+  }
+
+  //-- 4. Power mode --
+
+  SectionHeader {
+    text: "Power mode"
+  }
+
+  SegmentedToggle {
+    options: Array.from(Power.profiles).map(profile => root.profileLabel(profile))
+    currentIndex: Array.from(Power.profiles).indexOf(Power.profile)
+    onSelected: index => Power.setProfile(Power.profiles[index])
+  }
+
+  StyledText {
+    Layout.fillWidth: true
+    visible: Power.degradation !== ""
+    text: Power.degradation
+    color: Colors.warning
+    wrapMode: Text.WordWrap
   }
 }

@@ -43,7 +43,7 @@ PanelWindow {
 
       NotificationBell {}
       Workspaces { monitor: Hyprland.monitorFor(root.screen) }
-      PowerMode {}
+      StayAwake {}
     }
 
     RowLayout {

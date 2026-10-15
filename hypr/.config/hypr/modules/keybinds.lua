@@ -5,6 +5,7 @@
 -- Set programs that you use
 local terminal    = "kitty"
 local fileManager = "nautilus"
+local browser     = "librewolf"
 
 ---------------------
 ---- KEYBINDINGS ----
@@ -15,7 +16,7 @@ hl.bind("SUPER + W", hl.dsp.window.close())
 hl.bind("SUPER + SHIFT + F", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + J", hl.dsp.layout("togglesplit")) -- dwindle only
-hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("zen-browser"))
+hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd(browser))
 hl.bind("SUPER + F", hl.dsp.window.fullscreen("maximized", "toggle"))
 
 -- Move focus with SUPER + arrow keys
@@ -104,6 +105,8 @@ hl.bind("Print", hl.dsp.exec_cmd("qs ipc call screenshot region"),
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd("qs ipc call screenshot screen"),
   { description = "Screenshot of the screen" })
 
+hl.bind("SUPER + I", ipc("idle toggleStayAwake"),
+  { description = "Stay awake on / off" })
 
 -- Universal Copy-Paste
 -- Send with explicit mods to the focused surface by omitting the window target,

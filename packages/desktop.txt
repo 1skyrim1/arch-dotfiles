@@ -78,3 +78,6 @@ papirus-icon-theme
 dconf
 discord
 xdg-utils
+librewolf
+git-delta
+python-gobject

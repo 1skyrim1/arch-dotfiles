@@ -41,10 +41,10 @@ Singleton {
   readonly property list<string> lockCommand: ["loginctl", "lock-session"]
 
   //-- Lock screen and Idle --
-  readonly property int lockAfterIdle: -1
-  readonly property int screenOffAfterLock: -1
-  readonly property int suspendAfterIdleOnBattery: -1
-  readonly property int suspendAfterIdlePluggedIn: -1
+  readonly property int lockAfterIdle: 300
+  readonly property int screenOffAfterLock: 30
+  readonly property int suspendAfterIdleOnBattery: 900
+  readonly property int suspendAfterIdlePluggedIn: 1800
   readonly property string lockClockFormat: "HH:mm"
   readonly property string lockDateFormat: "dddd, MMMM d"
 

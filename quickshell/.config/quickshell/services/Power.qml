@@ -52,10 +52,10 @@ Singleton {
 
   readonly property string degradation: {
     switch (PowerProfiles.degradationReason) {
-    case PerformanceDegradationReason.Hightemperature:
-      return "Performance reduced: the laptio is too hot";
+    case PerformanceDegradationReason.HighTemperature:
+      return "Performance reduced: the laptop is too hot";
     case PerformanceDegradationReason.LapDetected:
-      return "Performance reduced: the laptop is on your Lap";
+      return "Performance reduced: the laptop is on your lap";
     default:
       return "";
     }
