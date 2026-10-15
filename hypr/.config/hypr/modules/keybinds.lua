@@ -80,6 +80,7 @@ hl.bind("SUPER + Space", ipc("launcher toggle"),
 hl.bind("SUPER + CTRL + Space", ipc("wallpaper toggle"),
   { description = "Wallpaper & theme" })
 
+
 -- Volume
 hl.bind("XF86AudioRaiseVolume", ipc("audio increase"), held)
 hl.bind("XF86AudioLowerVolume", ipc("audio decrease"), held)
@@ -92,5 +93,65 @@ hl.bind("XF86AudioNext", ipc("media next"), tap)
 hl.bind("XF86AudioPrev", ipc("media previous"), tap)
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), held)
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), held)
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("qs ipc call brightness increase"),
+  { locked = true, repeating = true, description = "Brightness up" })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("qs ipc call brightness decrease"),
+  { locked = true, repeating = true, description = "Brightness down" })
+
+-- Screenshots: Print = select a region (screen freezes), SHIFT + Print =
+-- the whole screen. Saved to ~/Pictures/Screenshots and copied.
+hl.bind("Print", hl.dsp.exec_cmd("qs ipc call screenshot region"),
+  { description = "Screenshot of a region" })
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("qs ipc call screenshot screen"),
+  { description = "Screenshot of the screen" })
+
+
+-- Universal Copy-Paste
+-- Send with explicit mods to the focused surface by omitting the window target,
+-- so universal clipboard shortcuts reach both normal windows and focused
+-- layer-shell surfaces such as Omarchy panels. A virtual keyboard (wtype) won't
+-- do: the physically held SUPER merges into the injected chord at the seat.
+-- The down/up split works around Hyprland send_shortcut sometimes leaving
+-- synthetic key state stuck/repeating.
+-- https://github.com/hyprwm/Hyprland/discussions/14099
+local function send_shortcut_once(mods, key)
+  return function()
+    hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "down" }))
+
+    hl.timer(function()
+      hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "up" }))
+    end, { timeout = 50, type = "oneshot" })
+  end
+end
+
+-- Lean on the terminal tag from default/hypr/apps/terminals.lua so there's one
+-- definition of what counts as a terminal. Dynamic tags carry a trailing "*".
+local function active_window_is_terminal()
+  local window = hl.get_active_window()
+  if not window then
+    return false
+  end
+
+  for _, tag in ipairs(window.tags or {}) do
+    if tag:gsub("%*$", "") == "terminal" then
+      return true
+    end
+  end
+
+  return false
+end
+
+local function universal_clipboard_shortcut(default_mods, default_key, terminal_mods, terminal_key)
+  return function()
+    if active_window_is_terminal() then
+      send_shortcut_once(terminal_mods, terminal_key)()
+    else
+      send_shortcut_once(default_mods, default_key)()
+    end
+  end
+end
+
+hl.bind("SUPER + A", send_shortcut_once("CTRL", "A"))
+hl.bind("SUPER + C", universal_clipboard_shortcut("CTRL", "C", "CTRL SHIFT", "C"))
+hl.bind("SUPER + V", universal_clipboard_shortcut("CTRL", "V", "CTRL SHIFT", "V"))
+hl.bind("SUPER + X", send_shortcut_once("CTRL", "X"))

@@ -38,6 +38,9 @@ Singleton {
 
   readonly property string image: "\uf03e"
 
+  readonly property string chevronLeft: "\u{f0141}"
+  readonly property string chevronRight: "\u{f0142}"
+
   //-- Media --
   readonly property string music: "\uf001"
   readonly property string previous: "\uf048"
@@ -54,6 +57,37 @@ Singleton {
   readonly property string reboot: "\uf0e2"
   readonly property string logout: "\uf08b"
   readonly property string sleep: "\uf186"
+
+  // Quiet -> Loud
+  readonly property list<string> volumeLevels: ["\u{f057f}", "\u{f0580}", "\u{f057e}"]
+  readonly property string volumeOff: "\u{f0581}"
+  readonly property string brightness: "\u{f00df}"
+
+  //-- Bluetooth --
+  readonly property string bluetooth: "\u{f00af}"
+  readonly property string bluetoothConnected: "\u{f00b1}"
+
+  function bluetoothDevice(iconName: string): string {
+    switch (iconName) {
+    case "audio-headset":
+    case "audio-headphones":
+      return "\u{f02cb}"
+    case "audio-card":
+      return "\u{f04c3}"
+    case "input-mouse":
+      return "\u{f037d}"
+    case "input-keyboard":
+      return "\u{f030c}"
+    case "input-gaming":
+      return "\u{f0297}"
+    case "phone":
+      return "\u{f011c}"
+    case "computer":
+      return "{f0322}"
+    default:
+      return bluetooth;
+    }
+  }
 
   function network(kind: string, level: int): string {
     if (kind === "wired")

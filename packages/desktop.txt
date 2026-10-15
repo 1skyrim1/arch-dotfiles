@@ -78,3 +78,5 @@ adw-gtk-theme
 qt6ct
 papirus-icon-theme
 dconf
+discord
+xdg-utils

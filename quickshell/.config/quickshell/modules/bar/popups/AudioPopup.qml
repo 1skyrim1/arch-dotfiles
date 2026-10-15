@@ -8,6 +8,13 @@ import qs.components
 BarPopup {
   id: root
 
+  onVisibleChanged: {
+    if (visible)
+      Osd.popupOpened("volume");
+    else
+      Osd.popupClosed("volume")
+  }
+
   //-- Output Devices --
   SectionHeader { text: "Output" }
 

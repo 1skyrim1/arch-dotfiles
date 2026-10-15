@@ -13,16 +13,20 @@ import qs.config
 import qs.services
 import qs.components
 
-BarPopup {
+ColumnLayout {
   id: root
+
+  property bool active: false
 
   property QsNetworking.WifiNetwork passwordNetwork: null
 
-  implicitWidth: Appearance.networkPopupWidth
+  signal closeRequested()
 
-  onVisibleChanged: {
-    Network.setScanning(visible);
-    if (!visible)
+  spacing: Appearance.popupSpacing
+
+  onActiveChanged: {
+    Network.setScanning(active);
+    if (!active)
       passwordNetwork = null;
   }
 
@@ -42,7 +46,7 @@ BarPopup {
 
   function activate(network: QsNetworking.WifiNetwork): void {
     if (Network.needsSettings(network)) {
-      visible = false;
+      closeRequested();
       Network.openSettings();
       return;
     }
@@ -53,51 +57,24 @@ BarPopup {
   function submitPassword(): void {
     if (!passwordNetwork || passwordField.text === "")
       return;
-    Network.connectWihPassword(passwordNetwork, passwordField.text);
+    Network.connectionWithPassword(passwordNetwork, passwordField.text);
     passwordNetwork = null;
   }
 
-  //-- 1.Header --
-
-  RowLayout {
-    Layout.fillWidth: true
-    spacing: Appearance.popupRowPadding
-
-    StyledText {
-      Layout.fillWidth: true
-      text: "Network"
-      font.bold: true
-      font.pixelSize: Appearance.popupTitleSize
-    }
-
-    StyledText {
-      visible: Network.wifiAvailable
-      text: "Wi-Fi"
-      color: Colors.foregroundMuted
-    }
-
-    StyledToggle {
-      visible: Network.wifiAvailable
-      enabled: !Network.wifiBlocked
-      checked: Network.wifiEnabled && !Network.wifiBlocked
-      onToggled: Network.setWifiEnabled(!Network.wifiEnabled)
-    }
-  }
-
-  //-- 2: Current connection --
+  //-- 1: Current connection --
 
   ConnectionCard {
     Layout.fillWidth: true
   }
 
-  //-- 3: Traffic --
+  //-- 2: Traffic --
 
   TrafficCard {
     Layout.fillWidth: true
     visible: Network.online
   }
 
-  //-- 4: Networks --
+  //-- 3: Networks --
 
   RowLayout {
     Layout.fillWidth: true
@@ -183,7 +160,7 @@ BarPopup {
     }
   }
 
-  //-- 5. Errors and settings --
+  //-- 4. Errors and settings --
 
   StyledText {
     Layout.fillWidth: true
@@ -198,7 +175,7 @@ BarPopup {
     icon: Icons.settings
     text: "Network settings"
     onClicked: {
-      root.visible = false;
+      root.closeRequested();
       Network.openSettings();
     }
   }
@@ -316,7 +293,7 @@ BarPopup {
   component TrafficCard: Card {
     id: traffic
 
-    readonly property real graphMaximum: Math.max(4*1024,
+    readonly property real graphMaximum: Math.max(Config.minTraffic,
                                                   ...Array.from(Network.downloadHistory),
                                                   ...Array.from(Network.uploadHistory))
 

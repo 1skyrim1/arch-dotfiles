@@ -65,14 +65,17 @@ Singleton {
 
     function increase(): void {
       root.changeVolume(Config.volumeStep);
+      Osd.show("volume");
     }
 
     function decrease(): void {
       root.changeVolume(-Config.volumeStep);
+      Osd.show("volume");
     }
 
     function toggleMute(): void {
       root.toggleMute();
+      Osd.show("volume");
     }
   }
 }

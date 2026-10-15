@@ -15,6 +15,7 @@ PanelWindow {
   // "blur": the blurred wallpaper, hiding your windows (session menu)
   // "none": nothing: windows stay fully visible (wallpaper switcher)
   property string backdrop: "dim"
+  property bool closeOnBackdropClick: true
   default property alias content: contentArea.data
 
   readonly property bool open: Overlays.current === name
@@ -98,7 +99,10 @@ PanelWindow {
 
     MouseArea {
       anchors.fill: parent
-      onClicked: Overlays.close()
+      onClicked: {
+        if (root.closeOnBackdropClick)
+          Overlays.close();
+      }
     }
 
     Item {

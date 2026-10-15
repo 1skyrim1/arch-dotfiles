@@ -21,15 +21,27 @@ Pill {
   interactive: true
   onClicked: popup.visible = !popup.visible
 
-  IconLabel {
-    icon: Icons.network(Network.kind, Network.signalLevel(Network.currentNetwork))
-    text: root.label
-    maximumTextWidth: Appearance.pillMaxTextWidth
-    iconColor: Network.online ? Colors.foreground : Colors.foregroundMuted
-    textColor: Network.online ? Colors.foreground : Colors.foregroundMuted
+  Row {
+    spacing: Appearance.popupRowPadding
+
+    IconLabel {
+      anchors.verticalCenter: parent.verticalCenter
+      icon: Icons.network(Network.kind, Network.signalLevel(Network.currentNetwork))
+      text: root.label
+      maximumTextWidth: Appearance.pillMaxTextWidth
+      iconColor: Network.online ? Colors.foreground : Colors.foregroundMuted
+      textColor: Network.online ? Colors.foreground : Colors.foregroundMuted
+    }
+
+    StyledText {
+      anchors.verticalCenter: parent.verticalCenter
+      visible: Bluetooth.connectedDevices.length > 0
+      text: Icons.bluetoothConnected
+      font.pixelSize: Appearance.iconSize
+    }
   }
 
-  NetworkPopup {
+  ConnectionsPopup {
     id: popup
 
     anchorItem: root

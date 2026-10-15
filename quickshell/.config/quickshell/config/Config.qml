@@ -16,7 +16,6 @@ Singleton {
   readonly property string wallpaperMode: "dark"
   readonly property string wallpaperScheme: "scheme-tonal-spot"
 
-  readonly property string clockFormat: "h:mm AP"
   readonly property int workspaceCount: 5
   readonly property real volumeStep: 0.05
 
@@ -25,6 +24,7 @@ Singleton {
 
   readonly property int trafficSampleInterval: 1000
   readonly property int trafficHistoryLength: 60
+  readonly property int minTraffic: 0
 
   readonly property string wallpaperDir: `${Quickshell.env("HOME")}/Pictures/wallpapers`
 
@@ -40,8 +40,11 @@ Singleton {
   readonly property list<string> logoutCommand: ["sh", "-c", "loginctl terminate-session \"$XDG_SESSION_ID\""]
   readonly property list<string> lockCommand: ["loginctl", "lock-session"]
 
-  //-- Lock screen --
+  //-- Lock screen and Idle --
   readonly property int lockAfterIdle: -1
+  readonly property int screenOffAfterLock: -1
+  readonly property int suspendAfterIdleOnBattery: -1
+  readonly property int suspendAfterIdlePluggedIn: -1
   readonly property string lockClockFormat: "HH:mm"
   readonly property string lockDateFormat: "dddd, MMMM d"
 
@@ -51,6 +54,19 @@ Singleton {
   readonly property string avatarDir: "/var/lib/AccountsService/icons"
   readonly property int greeterMinUid: 1000
   readonly property list<string> greeterSessionCommand: ["systemd-cat", "-t", "hyprland", "start-hyprland"]
+
+  //-- Brightness and on-screen indicator --
+  readonly property real brightnessStep: 0.05
+  readonly property real brightnessMinimum: 0.01
+  readonly property int osdTimeout: 1500
+
+  //-- Clock and Calendar --
+  readonly property string barClockFormat: "HH:mm"
+  readonly property string calendarDateFormat: "d MMMM yyyy"
+  readonly property bool calendarWeekNumbers: true
+
+  // screenshots
+  readonly property string screenshotDir: `${Quickshell.env("HOME")}/Pictures/Screenshots`
 
   // Returns the terminal command followed by `args`, so the command opens in a new terminal window.
   function inTerminal(args: list<string>): list<string> {

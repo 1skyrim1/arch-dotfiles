@@ -18,9 +18,10 @@ Singleton {
   // Desktop-level surface
   readonly property color background: blend("surface")
   readonly property color pillBackground: blend("surface_container")
+  readonly property color pillBackgroundHover: blend("surface_container_highest")
   readonly property color popupBackground: blend("surface_container")
   // Things that sit on a popup: fields, buttons, the selected list row.
-  readonly property color surfaceRaised: blend("surface_container_highestt")
+  readonly property color surfaceRaised: blend("surface_container_highest")
 
   // Text and icons.
   readonly property color foreground: blend("on_surface")

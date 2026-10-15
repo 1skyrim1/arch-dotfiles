@@ -132,4 +132,18 @@ Singleton {
   readonly property real thumbnailUnchosenScale: 0.85
   //-- Theme --
   readonly property int themeTransitionDuration: 1000
+
+  //-- On-screen indicator --
+  readonly property int osdWidth: 300
+  readonly property int osdHeight: 48
+  readonly property int osdMargin: 64
+  readonly property int osdPadding: 18
+
+  //-- Password Dialog --
+  readonly property int polkitWidth: 400
+  readonly property int polkitIconSize: 48
+  readonly property int polkitAvatarSize: 32
+
+  //-- Calendar --
+  readonly property int calendarCellSize: 36
 }

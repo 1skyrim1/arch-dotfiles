@@ -153,18 +153,6 @@ Singleton {
                            + "Locking on lid close and `loginctl lock-session` won't work.")
   }
 
-  //-- Idle --
-
-  IdleMonitor {
-    enabled: Config.lockAfterIdle > 0 && !root.locked
-    timeout: Config.lockAfterIdle
-    respectInhibitors: true
-    onIsIdleChanged: {
-      if (isIdle)
-        root.lock();
-    }
-  }
-
   //-- Ipc --
 
   IpcHandler {
