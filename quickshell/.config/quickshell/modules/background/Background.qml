@@ -16,6 +16,7 @@ import Quickshell
 import Quickshell.Wayland
 import qs.config
 import qs.services
+import qs.components
 
 Scope {
   Variants {
@@ -38,6 +39,20 @@ Scope {
       WlrLayershell.namespace: "myshell-background"
       // Shows only before the first wallpaper is chosen.
       color: Colors.background
+
+      Repeater {
+        model: ScriptModel {
+          values: Wallpaper.available
+          objectProp: "path"
+        }
+
+        delegate: WallpaperThumbnail {
+          required property var modelData
+
+          path: modelData.path
+          visible: false
+        }
+      }
 
       Item {
         id: wallpaper

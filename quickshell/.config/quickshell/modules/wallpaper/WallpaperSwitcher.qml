@@ -18,11 +18,6 @@ import qs.components
 Overlay {
   id: root
 
-  // The size thumbnails are decoded at. The preloader and the strip must
-  // ask for exactly the same size: that's what lets the strip reuse the
-  // preloaded images (see the Repeater below).
-  readonly property size thumbnailSize: Qt.size(Appearance.thumbnailWidth, Appearance.thumbnailHeight)
-
   function apply(): void {
     const chosen = Wallpaper.available[strip.currentIndex];
     if (chosen)
@@ -50,26 +45,6 @@ Overlay {
 
     interval: 50
     onTriggered: Wallpaper.upcoming = Wallpaper.available[strip.currentIndex]?.path ?? ""
-  }
-
-  // Loads every thumbnail at startup, in the background, and keeps them
-  // in memory (a few MB). The strip below asks for the very same images
-  // (same file, same size), and Qt hands it these finished ones instead
-  // of decoding again: the switcher opens with all thumbnails in place.
-  Repeater {
-    model: ScriptModel {
-      values: Wallpaper.available
-      objectProp: "path"
-    }
-
-    delegate: Image {
-      required property var modelData
-
-      visible: false
-      source: modelData.path
-      asynchronous: true
-      sourceSize: root.thumbnailSize
-    }
   }
 
   // As wide as the screen: with no panel around it, the row simply runs
@@ -170,14 +145,9 @@ Overlay {
           // shows while image is loading
           color: Colors.surfaceRaised
 
-          Image {
+          WallpaperThumbnail {
             anchors.fill: parent
-            source: thumbnail.modelData.path
-            fillMode: Image.PreserveAspectCrop
-            asynchronous: true
-            // Decoded at thumbnail size, not the full image, and
-            // the same size as the preloader's, to reuse its work.
-            sourceSize: root.thumbnailSize
+            path: thumbnail.modelData.path
           }
         }
 
