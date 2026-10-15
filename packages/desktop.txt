@@ -11,8 +11,6 @@ uwsm
 xdg-desktop-portal-hyprland
 # File open/save dialogs for apps using the portal
 xdg-desktop-portal-gtk
-# Password prompt when GUI apps need admin rights
-hyprpolkitagent
 # Qt apps (incl. Quickshell) natively on Wayland
 qt5-wayland
 qt6-wayland
@@ -43,7 +41,7 @@ power-profiles-daemon
 # Tools: clipboard CLI, screenshots
 wl-clipboard
 grim
-slurp
+libnotify
 zsh-completions
 zsh-autosuggestions
 zsh-syntax-highlighting
